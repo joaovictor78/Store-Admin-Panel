@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "540008726527",
+    "firebase_url": "https://food-menu-186fa-default-rtdb.firebaseio.com",
+    "project_id": "food-menu-186fa",
+    "storage_bucket": "food-menu-186fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540008726527:android:4cb134d48ad78e32ca71ca",
+        "android_client_info": {
+          "package_name": "com.example.store_admin_panel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540008726527-qk5rs1vgl4f1le7dsr0q59b69to09mud.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDS2SxcpQsak8vw9gtLqbKQoQ1gALQVRQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540008726527-qk5rs1vgl4f1le7dsr0q59b69to09mud.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "540008726527-eugjlj2m21itpeedviefvgcou9b393jk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.storeAdminPanel"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
