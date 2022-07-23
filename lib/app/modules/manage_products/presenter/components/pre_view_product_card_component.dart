@@ -45,7 +45,9 @@ class _ProductEditableCardComponentState
             children: [
               Container(
                   width: double.infinity,
-                  height: widget.productModel?.image?.path == "" ? 80 : null,
+                  height: widget.productModel?.productImageData?.imagePath == ""
+                      ? 80
+                      : null,
                   margin: const EdgeInsets.only(
                       top: 15, left: 10, bottom: 10, right: 5),
                   decoration: BoxDecoration(
@@ -54,13 +56,19 @@ class _ProductEditableCardComponentState
                   alignment: Alignment.topCenter,
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.file(
-                        widget.productModel?.image ?? File(""),
-                        fit: BoxFit.fitHeight,
-                        errorBuilder: (_, __, ___) {
-                          return Container();
-                        },
-                      ))),
+                      child: widget.productModel!.productImageData!.imagePath!
+                              .contains('https://')
+                          ? Image.network(
+                              widget.productModel!.productImageData!.imagePath!)
+                          : Image.file(
+                              File(widget.productModel?.productImageData
+                                      ?.imagePath ??
+                                  ""),
+                              fit: BoxFit.fitHeight,
+                              errorBuilder: (_, __, ___) {
+                                return Container();
+                              },
+                            ))),
               Positioned(
                   bottom: 5,
                   right: -0.5,

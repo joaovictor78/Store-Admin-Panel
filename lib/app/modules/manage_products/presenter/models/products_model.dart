@@ -1,16 +1,16 @@
-import 'dart:io';
-
 import '../../domain/dtos/product_dto.dart';
+import '../../domain/entities/product.dart';
+import '../../domain/value_objects/product_image_vo.dart';
 
 class ProductModel {
-  File? image;
+  ProductImageVO? productImageData;
   String name;
   String description;
   String type;
   double price;
   double rating;
   ProductModel(
-      {this.image,
+      {this.productImageData,
       this.name = "",
       this.price = 0,
       this.description = "",
@@ -18,24 +18,34 @@ class ProductModel {
       this.type = ""});
 
   ProductModel copyWith(
-      {File? image,
+      {ProductImageVO? productImageData,
       String? name,
       String? type,
       String? description,
       double? price,
-      double? ratting}) {
+      double? rating}) {
     return ProductModel(
-        image: image ?? this.image,
+        productImageData: productImageData ?? this.productImageData,
         name: name ?? this.name,
         price: price ?? this.price,
         description: description ?? this.description,
-        rating: ratting ?? this.rating,
+        rating: rating ?? this.rating,
         type: type ?? this.type);
   }
 
+  factory ProductModel.from(Product product) {
+    return ProductModel(
+        productImageData: product.productImage,
+        description: product.description,
+        name: product.title,
+        price: product.price,
+        rating: product.rating,
+        type: product.type);
+  }
   ProductDTO convertToDTO() {
     return ProductDTO(
-        imageFile: image!,
+        title: name,
+        productImageData: productImageData!,
         description: description,
         rating: rating,
         price: price,
@@ -43,7 +53,7 @@ class ProductModel {
   }
 
   String verify() {
-    if (image?.path == "") {
+    if (productImageData?.imagePath == "") {
       return "A imagem não pode está vazia";
     } else if (name == "") {
       return "O nome não pode ser nulo";

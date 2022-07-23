@@ -16,3 +16,8 @@ class CreateProductEvent implements ManageProductsEvent {
   final ProductDTO product;
   CreateProductEvent(this.product);
 }
+
+class UpdateProductEvent implements ManageProductsEvent {
+  final ProductDTO product;
+  UpdateProductEvent(this.product);
+}

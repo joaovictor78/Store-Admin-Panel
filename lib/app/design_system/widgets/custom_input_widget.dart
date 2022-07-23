@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 class CustomInputWidget extends StatefulWidget {
   String hintText;
   String labelText;
+  String? initialValue;
   IconData icon;
   TextEditingController? controller;
   TextInputType? keyboardType;
@@ -12,6 +13,7 @@ class CustomInputWidget extends StatefulWidget {
   CustomInputWidget(
       {this.hintText = "",
       this.labelText = "",
+      this.initialValue,
       this.icon = Icons.abc,
       this.keyboardType,
       this.onChanged,
@@ -27,6 +29,7 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: TextFormField(
+        initialValue: widget.initialValue,
         controller: widget.controller,
         onChanged: widget.onChanged,
         keyboardType: widget.keyboardType,

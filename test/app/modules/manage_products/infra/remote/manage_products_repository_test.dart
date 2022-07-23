@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -7,6 +5,7 @@ import 'package:store_admin_panel/app/core/erros/client_http_failures.dart';
 import 'package:store_admin_panel/app/core/erros/general_failures.dart';
 import 'package:store_admin_panel/app/modules/manage_products/domain/dtos/product_dto.dart';
 import 'package:store_admin_panel/app/modules/manage_products/domain/entities/product.dart';
+import 'package:store_admin_panel/app/modules/manage_products/domain/value_objects/product_image_vo.dart';
 import 'package:store_admin_panel/app/modules/manage_products/infra/repositories/manage_products_repository.dart';
 import '../../../../../mocks/mocks.dart';
 
@@ -50,11 +49,14 @@ void main() {
       final datasource = ManageProductsDataSourceFirestoreMock();
       final repository = ManageProductsRepository(datasource);
 
-      when(() => datasource.createProduct(Product()))
-          .thenAnswer((_) async => Product());
+      when(() =>
+              datasource.createProduct(Product(productImage: ProductImageVO())))
+          .thenAnswer((_) async => Product(productImage: ProductImageVO()));
 
       final response = await repository.createProduct(
-          product: ProductDTO(imageFile: File("test_resources/assets/0.jpg")));
+          product: ProductDTO(
+              productImageData:
+                  ProductImageVO(imagePath: "test_resources/assets/0.jpg")));
       response.fold((l) => null, (r) => expect(r, isA<Product>()));
     });
   });

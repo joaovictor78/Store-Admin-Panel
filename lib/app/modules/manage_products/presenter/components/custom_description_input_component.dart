@@ -5,8 +5,9 @@ import 'package:line_icons/line_icons.dart';
 // ignore: use_key_in_widget_constructors, must_be_immutable
 class CustomDescriptionInputComponent extends StatefulWidget {
   void Function(String)? onChanged;
+  String? initialValue;
   // ignore: use_key_in_widget_constructors
-  CustomDescriptionInputComponent({this.onChanged});
+  CustomDescriptionInputComponent({this.onChanged, this.initialValue});
   @override
   State<CustomDescriptionInputComponent> createState() =>
       _CustomDescriptionInputComponentState();
@@ -40,12 +41,13 @@ class _CustomDescriptionInputComponentState
                 ),
                 TextFormField(
                   keyboardType: TextInputType.multiline,
+                  initialValue: widget.initialValue,
                   maxLines: null,
                   onChanged: widget.onChanged,
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintStyle: GoogleFonts.inter(fontSize: 13),
-                      hintText: "Raw organic brown eggs in a basket"),
+                      hintText: "Informe a descrição do produto"),
                 )
               ],
             ),

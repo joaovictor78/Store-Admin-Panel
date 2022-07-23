@@ -1,6 +1,8 @@
+import '../value_objects/product_image_vo.dart';
+
 class Product {
   String id;
-  String pathImage;
+  ProductImageVO productImage;
   String title;
   String type;
   String description;
@@ -8,10 +10,11 @@ class Product {
   double price;
   Product(
       {this.id = "",
-      this.pathImage = "",
+      ProductImageVO? productImage,
       this.title = "",
       this.type = "",
       this.description = "",
       this.rating = 0,
-      this.price = 0.0});
+      this.price = 0.0})
+      : productImage = productImage ?? ProductImageVO();
 }

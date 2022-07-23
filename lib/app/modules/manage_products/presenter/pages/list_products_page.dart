@@ -170,11 +170,13 @@ void _showCustomBottomSheet(context, Product productSelected) {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _customCircleButton(
-                    "Editar",
-                    Colors.black,
-                    "assets/image-icons/box-icon.png",
-                    context,
-                  ),
+                      "Editar",
+                      Colors.black,
+                      "assets/image-icons/box-icon.png",
+                      context, onPressed: () {
+                    Modular.to.pushNamed('/manage_products/update-product',
+                        arguments: productSelected);
+                  }),
                   SizedBox(width: Sizes.dp19(context)),
                   _customCircleButton("Remover", Colors.red,
                       "assets/image-icons/remove-icon.png", context,

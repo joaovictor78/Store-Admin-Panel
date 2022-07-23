@@ -8,6 +8,8 @@ import '../../../../design_system/styles/color_palettes.dart';
 import '../../../../design_system/utils/sizes.dart';
 import '../../../../design_system/widgets/custom_button_widget.dart';
 import '../../../../design_system/widgets/custom_input_widget.dart';
+import '../../domain/dtos/product_dto.dart';
+import '../../domain/entities/product.dart';
 import '../../domain/value_objects/product_image_vo.dart';
 import '../bloc/manage_products_bloc.dart';
 import '../components/custom_description_input_component.dart';
@@ -16,30 +18,34 @@ import '../components/pre_view_product_card_component.dart';
 import '../events/manage_products_events.dart';
 import '../models/products_model.dart';
 
-class CreateProductPage extends StatefulWidget {
-  const CreateProductPage({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class UpdateProductPage extends StatefulWidget {
+  Product product;
+  // ignore: use_key_in_widget_constructors
+  UpdateProductPage(this.product);
 
   @override
-  State<CreateProductPage> createState() => _CreateProductPageState();
+  State<UpdateProductPage> createState() => _UpdateProductPageState();
 }
 
-class _CreateProductPageState extends State<CreateProductPage> {
+class _UpdateProductPageState extends State<UpdateProductPage> {
   late ManageProductsBloc manageProductsBloc;
   late MoneyMaskedTextController priceTextController;
-  ValueNotifier<ProductModel> productModel = ValueNotifier<ProductModel>(
-      ProductModel(productImageData: ProductImageVO(name: '', imagePath: '')));
+  ValueNotifier<ProductModel> productModel =
+      ValueNotifier<ProductModel>(ProductModel());
   final ImagePicker _picker = ImagePicker();
 
   double ratting = 0;
   @override
   void initState() {
     manageProductsBloc = Modular.get<ManageProductsBloc>();
-    ratting = 3;
+    ratting = widget.product.rating;
     priceTextController = MoneyMaskedTextController(
         leftSymbol: 'R\$ ',
         decimalSeparator: ',',
         thousandSeparator: '.',
-        initialValue: 0);
+        initialValue: widget.product.price);
+    productModel.value = ProductModel.from(widget.product);
     super.initState();
   }
 
@@ -66,7 +72,7 @@ class _CreateProductPageState extends State<CreateProductPage> {
             ]),
           ),
         ),
-        title: Text("Criar Produto",
+        title: Text("Editar Produto",
             style:
                 GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600)),
         leading: IconButton(
@@ -77,12 +83,13 @@ class _CreateProductPageState extends State<CreateProductPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: CustomButtonWidget(
-        title: "CRIAR PRODUTO",
+        title: "SALVAR ALTERAÇÕES",
         onPressed: () {
           String messageError = productModel.value.verify();
           if (messageError.isEmpty) {
-            manageProductsBloc
-                .add(CreateProductEvent(productModel.value.convertToDTO()));
+            ProductDTO productDTO = productModel.value.convertToDTO();
+            productDTO.id = widget.product.id;
+            manageProductsBloc.add(UpdateProductEvent(productDTO));
           } else {
             final snackBar = SnackBar(
               backgroundColor: Colors.red,
@@ -118,13 +125,14 @@ class _CreateProductPageState extends State<CreateProductPage> {
                           if (imageSelected != null) {
                             productModel.value = product.copyWith(
                                 productImageData: ProductImageVO(
-                                    name: '', imagePath: imageSelected.path));
+                                    imagePath: imageSelected.path));
                           }
                         }),
                     SizedBox(height: Sizes.dp21(context)),
                     CustomInputWidget(
                       hintText: "Informe o nome",
                       labelText: "Nome",
+                      initialValue: product.name,
                       icon: LineIcons.edit,
                       onChanged: (text) {
                         productModel.value = product.copyWith(name: text);
@@ -133,6 +141,7 @@ class _CreateProductPageState extends State<CreateProductPage> {
                     CustomInputWidget(
                       hintText: "Informe o tipo",
                       labelText: "Tipo",
+                      initialValue: product.type,
                       onChanged: (text) {
                         productModel.value = product.copyWith(type: text);
                       },
@@ -149,12 +158,17 @@ class _CreateProductPageState extends State<CreateProductPage> {
                       },
                       icon: LineIcons.coins,
                     ),
-                    CustomDescriptionInputComponent(onChanged: (text) {
-                      productModel.value = product.copyWith(description: text);
-                    }),
-                    CustomRatingInputComponent(onRatingUpdate: (rating) {
-                      productModel.value = product.copyWith(rating: rating);
-                    }),
+                    CustomDescriptionInputComponent(
+                        initialValue: product.description,
+                        onChanged: (text) {
+                          productModel.value =
+                              product.copyWith(description: text);
+                        }),
+                    CustomRatingInputComponent(
+                        initialRating: product.rating,
+                        onRatingUpdate: (rating) {
+                          productModel.value = product.copyWith(rating: rating);
+                        }),
                     SizedBox(height: Sizes.dp29(context) * 3)
                   ],
                 ),

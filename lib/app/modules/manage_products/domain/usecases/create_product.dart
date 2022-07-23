@@ -9,16 +9,19 @@ class CreateProduct {
   final IManageProductsRepository _repository;
   CreateProduct(this._repository);
   Future<Either<Failure, Product>> call(ProductDTO product) async {
-    final urlOrFailure =
-        await _repository.uploadImageProduct(product.imageFile);
-    if (urlOrFailure.isLeft()) {
-      return Left(FailureThenUploadProductImage(message: ""));
+    final productImageDataOrFailure = await _repository
+        .uploadImageProduct(product.productImageData.imagePath!);
+    if (productImageDataOrFailure.isLeft()) {
+      return Left(FailureToUploadProductImage(message: ""));
     }
+    productImageDataOrFailure.map((r) => product.productImageData = r);
     final newProductOrFailure =
         await _repository.createProduct(product: product);
     if (newProductOrFailure.isRight()) {
       newProductOrFailure
-          .map((product) => urlOrFailure.map((url) => product.pathImage = url));
+          .map((product) => productImageDataOrFailure.map((productImageData) {
+                product.productImage = productImageData;
+              }));
     }
     return newProductOrFailure;
   }

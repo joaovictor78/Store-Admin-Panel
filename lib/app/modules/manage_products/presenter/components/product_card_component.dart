@@ -21,13 +21,6 @@ class ProductCardComponent extends StatefulWidget {
 
 class _ProductCardComponentState extends State<ProductCardComponent> {
   String imageUrl = "";
-  late FirebaseStorage firebaseStorage;
-  @override
-  void initState() {
-    firebaseStorage = FirebaseStorage.instance;
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +54,7 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: CachedNetworkImage(
-                      imageUrl: widget.product.pathImage,
+                      imageUrl: widget.product.productImage.imagePath!,
                       fit: BoxFit.cover,
                       progressIndicatorBuilder: (_, __, ___) {
                         return const Center(
@@ -155,7 +148,7 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                     )),
                 const Spacer(),
                 Text(
-                  "R\$ 13,90",
+                  "R\$ ${widget.product.price}",
                   style: GoogleFonts.inter(
                       color: Colors.black, fontWeight: FontWeight.w700),
                 )

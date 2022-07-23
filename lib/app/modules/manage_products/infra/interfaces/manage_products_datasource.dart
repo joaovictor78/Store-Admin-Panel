@@ -1,10 +1,10 @@
-import 'dart:io';
 import '../../domain/entities/product.dart';
 
 abstract class IManageProductsDataSource {
   Future<Product> createProduct(Product product);
-  Future<String> uploadImage(File image);
+  Future<Map<String, dynamic>> uploadImage(String imagePath);
+  Future<Map<String, dynamic>> updateImage(String id, String imagePath);
   Future<List<Map<String, dynamic>>> getProducts({String filter = ""});
-  Future<void> updateProduct();
+  Future<Map<String, dynamic>> updateProduct(String id, Product product);
   Future<void> removeProduct(String id);
 }

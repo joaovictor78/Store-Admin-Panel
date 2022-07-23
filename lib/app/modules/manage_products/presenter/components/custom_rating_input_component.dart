@@ -6,8 +6,10 @@ import 'package:line_icons/line_icons.dart';
 // ignore: use_key_in_widget_constructors, must_be_immutable
 class CustomRatingInputComponent extends StatefulWidget {
   void Function(double) onRatingUpdate;
+  double initialRating;
   // ignore: use_key_in_widget_constructors
-  CustomRatingInputComponent({required this.onRatingUpdate});
+  CustomRatingInputComponent(
+      {required this.onRatingUpdate, this.initialRating = 3});
   @override
   State<CustomRatingInputComponent> createState() =>
       _CustomRatingInputComponentState();
@@ -44,7 +46,7 @@ class _CustomRatingInputComponentState
                     margin: const EdgeInsets.symmetric(vertical: 15),
                     alignment: Alignment.topCenter,
                     child: RatingBar.builder(
-                        initialRating: 3,
+                        initialRating: widget.initialRating,
                         minRating: 0,
                         direction: Axis.horizontal,
                         allowHalfRating: true,

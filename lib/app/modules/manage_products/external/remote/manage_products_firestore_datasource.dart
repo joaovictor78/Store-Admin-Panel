@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import '../../domain/dtos/product_dto.dart';
 import '../../domain/entities/product.dart';
 import '../../infra/interfaces/manage_products_datasource.dart';
-import '../../infra/mappers/product_mapper.dart';
 
 class ManageProductsFirestoreDataSource implements IManageProductsDataSource {
   FirebaseFirestore firestore;
@@ -25,7 +25,8 @@ class ManageProductsFirestoreDataSource implements IManageProductsDataSource {
           .child(element['filename'])
           .getDownloadURL();
       final Map<String, dynamic> product = element.data();
-      product['filename'] = imageUrl;
+      product['filename'] = element.data()['filename'];
+      product['image_path'] = imageUrl;
       return product..addAll({'id': element.id});
     }).toList());
 
@@ -34,9 +35,8 @@ class ManageProductsFirestoreDataSource implements IManageProductsDataSource {
 
   @override
   Future<Product> createProduct(Product product) async {
-    final newProduct = await firestore
-        .collection('products')
-        .add(ProductMapper.toMap(product));
+    final newProduct =
+        await firestore.collection('products').add(ProductDTO.toMap(product));
     product.id = newProduct.id;
     return product;
   }
@@ -51,18 +51,47 @@ class ManageProductsFirestoreDataSource implements IManageProductsDataSource {
   }
 
   @override
-  Future<void> updateProduct() {
-    // TODO: implement updateProduct
-    throw UnimplementedError();
+  Future<Map<String, dynamic>> updateProduct(String id, Product product) async {
+    try {
+      final productMap = ProductDTO.toMap(product);
+      await firestore
+          .collection('products')
+          .doc(id)
+          .update(ProductDTO.toMap(product));
+      return productMap;
+    } on FirebaseException catch (error) {
+      throw error;
+    }
   }
 
   @override
-  Future<String> uploadImage(File image) async {
+  Future<Map<String, dynamic>> uploadImage(String imagePath) async {
     try {
-      TaskSnapshot uploadTask =
-          await firebaseStorage.ref(image.path).putFile(image);
+      File image = File(imagePath);
+      String path = image.path.split('/').last;
+      TaskSnapshot uploadTask = await firebaseStorage.ref(path).putFile(image);
       final url = await uploadTask.ref.getDownloadURL();
-      return url;
+      Map<String, dynamic> data = {
+        'filename': uploadTask.ref.name,
+        'image_path': url
+      };
+      return data;
+    } on FirebaseException catch (error) {
+      throw error;
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> updateImage(String id, String imagePath) async {
+    try {
+      File image = File(imagePath);
+      TaskSnapshot uploadTask = await firebaseStorage.ref(id).putFile(image);
+      final url = await uploadTask.ref.getDownloadURL();
+      Map<String, dynamic> data = {
+        'filename': uploadTask.ref.name,
+        'image_path': url
+      };
+      return data;
     } on FirebaseException catch (error) {
       throw error;
     }

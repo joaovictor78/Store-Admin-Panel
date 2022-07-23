@@ -1,12 +1,11 @@
-import 'dart:io';
 import 'package:dartz/dartz.dart';
 import '../../../../core/erros/client_http_failures.dart';
 import '../../../../core/erros/general_failures.dart';
 import '../../domain/dtos/product_dto.dart';
 import '../../domain/entities/product.dart';
 import '../../domain/usecases/interfaces/manage_products_repository.dart';
+import '../../domain/value_objects/product_image_vo.dart';
 import '../interfaces/manage_products_datasource.dart';
-import '../mappers/product_mapper.dart';
 
 class ManageProductsRepository implements IManageProductsRepository {
   final IManageProductsDataSource _dataSource;
@@ -35,7 +34,7 @@ class ManageProductsRepository implements IManageProductsRepository {
     try {
       final response = await _dataSource.getProducts(filter: filter);
       final convertResponse =
-          response.map((value) => ProductMapper.fromMap(value)).toList();
+          response.map((value) => ProductDTO.fromMap(value)).toList();
       return Right(convertResponse);
     } on NoInternetConection catch (error) {
       return Left(
@@ -47,9 +46,16 @@ class ManageProductsRepository implements IManageProductsRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> updateProduct() {
-    // TODO: implement updateProduct
-    throw UnimplementedError();
+  Future<Either<Failure, Product>> updateProduct(String id,
+      {required Product product}) async {
+    try {
+      final response = await _dataSource.updateProduct(id, product);
+      response['id'] = id;
+      final updatedProduct = ProductDTO.fromMap(response);
+      return Right(updatedProduct);
+    } catch (error) {
+      return Left(GeneralFailure(message: error.toString()));
+    }
   }
 
   @override
@@ -67,10 +73,24 @@ class ManageProductsRepository implements IManageProductsRepository {
   }
 
   @override
-  Future<Either<Failure, String>> uploadImageProduct(File image) async {
+  Future<Either<Failure, ProductImageVO>> uploadImageProduct(
+      String imagePath) async {
     try {
-      final response = await _dataSource.uploadImage(image);
-      return Right(response);
+      final response = await _dataSource.uploadImage(imagePath);
+      return Right(ProductImageVO(
+          name: response['filename'], imagePath: response['image_path']));
+    } catch (error) {
+      return Left(GeneralFailure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ProductImageVO>> updateImageProduct(
+      String id, String imagePath) async {
+    try {
+      final response = await _dataSource.updateImage(id, imagePath);
+      return Right(ProductImageVO(
+          name: response['filename'], imagePath: response['image_path']));
     } catch (error) {
       return Left(GeneralFailure(message: error.toString()));
     }

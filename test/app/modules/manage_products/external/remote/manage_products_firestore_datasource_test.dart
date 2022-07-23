@@ -3,6 +3,7 @@ import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:store_admin_panel/app/modules/manage_products/domain/entities/product.dart';
+import 'package:store_admin_panel/app/modules/manage_products/domain/value_objects/product_image_vo.dart';
 import 'package:store_admin_panel/app/modules/manage_products/external/remote/manage_products_firestore_datasource.dart';
 
 void main() {
@@ -54,7 +55,8 @@ void main() {
       expect(response, isA<List<Map<String, dynamic>>>());
       expect(response[0]['id'], isNotNull);
       expect(response[0]['title'], 'Brown eggs');
-      expect(response[0]['filename'], contains('https://'));
+      expect(response[0]['image_path'], contains('0.jpg'));
+      expect(response[0]['filename'], contains('0.jpg'));
     });
     test("should only return specific products from the filter parameter",
         () async {
@@ -71,9 +73,10 @@ void main() {
       final credentials = await firebaseStorage
           .ref()
           .putFile(File('test_resources/assets/0.jpg'));
-      final url =
-          await datasource.uploadImage(File('test_resources/assets/0.jpg'));
-      expect(url, contains('https://'));
+      final productImageData =
+          await datasource.uploadImage('test_resources/assets/0.jpg');
+      expect(productImageData['image_path'], contains('https://'));
+      expect(productImageData['filename'], equals('0.jpg'));
     });
     test('should return product if create with sucess', () async {
       final firestore = FakeFirebaseFirestore();
@@ -89,7 +92,8 @@ void main() {
         "price": 18.95,
         "rating": 3
       });
-      final response = await datasource.createProduct(Product());
+      final response = await datasource
+          .createProduct(Product(productImage: ProductImageVO()));
       expect(response, isA<Product>());
     });
   });
