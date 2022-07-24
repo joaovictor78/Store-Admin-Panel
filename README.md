@@ -29,7 +29,7 @@
 </p>
 
 <h1 align="center">
-    <img alt="Tela de funcionamento do App" src="screen.gif" height="350px" width="200px">
+    <img alt="Tela de funcionamento do App" src="https://gifyu.com/image/SNnuN" height="350px" width="200px">
 </h1>
 
 ## :computer: Tecnologias
