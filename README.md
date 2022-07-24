@@ -29,7 +29,7 @@
 </p>
 
 <h1 align="center">
-    <img alt="Tela de funcionamento do App" src="tela.gif" height="350px" width="200px">
+    <img alt="Tela de funcionamento do App" src="screen.gif" height="350px" width="200px">
 </h1>
 
 ## :computer: Tecnologias
@@ -44,5 +44,7 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 - [Clean Arch](https://medium.com/luizalabs/descomplicando-a-clean-architecture-cf4dfc4a1ac6)
 - [BLOC State Management](https://bloclibrary.dev/)
 - [Mocktail](https://pub.dev/packages/mocktail)
+
+
 
 
