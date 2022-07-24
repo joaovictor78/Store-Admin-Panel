@@ -2,10 +2,10 @@
   <h1 align="center">
     <img alt="Store Admin Page" src="https://user-images.githubusercontent.com/53379557/180632059-eafadd0c-a6a1-4626-9a12-a6b237498cda.png" height="250px" width="650px"/>
     <br>
-</h1>
+<p align="center"></h1>
     <br>
     Store Admin Page
-</h1>
+</h1></p>
 
 <p align="center">
     <img alt="GitHub - Linguagem em Maior Utilização" src="https://img.shields.io/github/languages/top/joaovictor78/Store-Admin-Panel.svg">
