@@ -2,7 +2,6 @@
   <h1 align="center">
     <img alt="Store Admin Page" src="https://user-images.githubusercontent.com/53379557/180632059-eafadd0c-a6a1-4626-9a12-a6b237498cda.png" height="250px" width="650px"/>
     <br>
-    Store Admin Page
 </h1>
     <br>
     Store Admin Page
