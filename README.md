@@ -41,4 +41,4 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 - [BLOC State Management](https://bloclibrary.dev/)
 - [Mocktail](https://pub.dev/packages/mocktail)
 
-<h6>Inspirado no README.md do repositório <a href="https://github.com/lukemorales/bancointer">Banco Inter's Internet Banking Redesign</a> de <a href="https://github.com/lukemorales">Luke Morales</a> </h6>
+
