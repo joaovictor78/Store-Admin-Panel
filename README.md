@@ -31,7 +31,7 @@
 <h1 align="center">
     <img alt="Tela de funcionamento do App" src="https://gifyu.com/image/SNnuN" height="350px" width="200px">
 </h1>
-
+<a href="https://gifyu.com/image/SNnuN"><img src="https://s4.gifyu.com/images/tela.gif" alt="tela.gif" border="0" /></a>
 ## :computer: Tecnologias
 
 Este projeto foi desenvolvido utilizando as seguintes tecnologias:
