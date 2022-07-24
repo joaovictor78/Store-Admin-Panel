@@ -23,9 +23,7 @@
   Este projeto é um CRUD de um painel admin de uma loja de produtos, projeto desenvolvido para aplicar conceitos de Clean Architecture, SOLID e praticas de desenvolvimento de testes de unidade, integração e E2E utilizando TDD.
 </h4>
 
-<p align="center">
-    <a href="#computer-tecnologias">Tecnologias</a>
-</p>
+
 
 <h1 align="center">
     <img alt="Tela de funcionamento do App" src="https://github.com/Jose-V-Melo/readme/blob/master/tela.gif" height="350px" width="200px">
