@@ -1,4 +1,8 @@
-# store_admin_panel
+# Store Admin Panel 
+
+![Splash Screen](https://user-images.githubusercontent.com/53379557/180627556-b14bcbf7-00a0-440e-8e4f-dd69404d7289.png)
+
+
 
 A new Flutter project.
 
