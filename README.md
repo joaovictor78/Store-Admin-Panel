@@ -25,6 +25,10 @@
 <h1 align="center">
     <img alt="Tela de funcionamento do App" src="readme_assets/screen.gif" height="350px" width="200px">
 </h1>
+
+## Aplicativo executavel para Android
+[app-release.zip](https://github.com/joaovictor78/Store-Admin-Panel/files/9182255/app-release.zip)
+
 ## :computer: Tecnologias
 
 Este projeto foi desenvolvido utilizando as seguintes tecnologias:
