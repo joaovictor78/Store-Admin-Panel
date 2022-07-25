@@ -23,7 +23,7 @@
 
 
 <h1 align="center">
-    <img alt="Tela de funcionamento do App" src="readme_asses/screen.gif" height="350px" width="200px">
+    <img alt="Tela de funcionamento do App" src="readme_assets/screen.gif" height="350px" width="200px">
 </h1>
 ## :computer: Tecnologias
 
